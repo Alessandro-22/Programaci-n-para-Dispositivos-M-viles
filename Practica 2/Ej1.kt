@@ -32,7 +32,6 @@ class CuentaBancaria(private var saldo: Double, private val limiteRetiro: Double
     }
 }
 
-// Ejemplo de uso
 fun main() {
     val cuenta = CuentaBancaria(1000.0, 200.0)
 
