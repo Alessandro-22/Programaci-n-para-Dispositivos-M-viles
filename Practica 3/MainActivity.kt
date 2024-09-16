@@ -1,3 +1,8 @@
+Descripción corta del problema:Interacción con Imágenes.
+ autor:Diego Alvarez Cruz
+ fecha:14/09/24
+ fecha última modificación: fecha:15/09/24
+
 class MainActivity : AppCompatActivity() {
 
     // Declarar variables para el Spinner y el boton
