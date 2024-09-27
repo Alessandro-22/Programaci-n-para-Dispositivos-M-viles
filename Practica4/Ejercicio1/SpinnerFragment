@@ -1,0 +1,52 @@
+package com.example.fragimagenes
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.Spinner
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+
+class SpinnerFragment : Fragment() {
+    private lateinit var spinner: Spinner
+    private lateinit var nextButton: Button
+    private lateinit var viewModel: ImageViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_spinner, container, false)
+
+        spinner = view.findViewById(R.id.image_spinner)
+        nextButton = view.findViewById(R.id.next_button)
+
+        viewModel = ViewModelProvider(requireActivity()).get(ImageViewModel::class.java)
+
+        // Lista de nombres de las imágenes sin extensión
+        val images = arrayOf("aventura", "daddy", "weeknd") // Asegúrate de que estos nombres coincidan con los archivos en drawable
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, images)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        // Restaurar la selección del spinner si ya se eligió una imagen
+        spinner.setSelection(viewModel.selectedIndex)
+
+        // Configurar el botón "Siguiente"
+        nextButton.setOnClickListener {
+            val selectedImage = spinner.selectedItem.toString()
+            viewModel.setImage(selectedImage, spinner.selectedItemPosition)
+
+            // Cambiar al fragmento de la imagen
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ImageFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        return view
+    }
+}
