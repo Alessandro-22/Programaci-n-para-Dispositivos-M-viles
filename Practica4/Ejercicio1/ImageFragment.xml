@@ -1,0 +1,41 @@
+package com.example.fragimagenes
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+
+class ImageFragment : Fragment() {
+    private lateinit var imageView: ImageView
+    private lateinit var backButton: Button
+    private lateinit var viewModel: ImageViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_image, container, false)
+
+        imageView = view.findViewById(R.id.image_view)
+        backButton = view.findViewById(R.id.back_button)
+
+        // Inicializar el ViewModel
+        viewModel = ViewModelProvider(requireActivity()).get(ImageViewModel::class.java)
+
+        // Mostrar la imagen seleccionada
+        val imageName = viewModel.selectedImage
+        val imageResource = resources.getIdentifier(imageName, "drawable", requireContext().packageName)
+        imageView.setImageResource(imageResource)
+
+        // Volver al SpinnerFragment
+        backButton.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
+        return view
+    }
+}
