@@ -1,0 +1,14 @@
+package com.example.fragimagenes
+
+
+import androidx.lifecycle.ViewModel
+
+class ImageViewModel : ViewModel() {
+    var selectedImage: String? = null
+    var selectedIndex: Int = 0
+
+    fun setImage(imageName: String, index: Int) {
+        selectedImage = imageName
+        selectedIndex = index
+    }
+}
